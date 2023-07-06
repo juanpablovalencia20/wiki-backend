@@ -1,0 +1,48 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type City {
+  id: Int!
+  code: String!
+  description: String!
+}
+
+type User {
+  id: Int!
+  username: String!
+  email: String!
+  password: String!
+  name: String!
+  profile_img: String!
+  cover_img: String!
+  biography: String!
+}
+
+type TokenResponse {
+  access_token: String!
+  emailVerified: Boolean!
+  registered: Boolean!
+}
+
+type Query {
+  cities: [City!]!
+  users: [User!]!
+}
+
+type Mutation {
+  login(loginUserInput: LoginUserInput!): TokenResponse!
+  register(registerUserInput: RegisterUserInput!): TokenResponse!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+input RegisterUserInput {
+  username: String!
+  email: String!
+  name: String!
+  password: String!
+}
