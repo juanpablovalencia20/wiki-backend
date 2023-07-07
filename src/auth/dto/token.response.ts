@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { User } from 'src/users/entities/user.entity';
 
 @ObjectType()
 export class TokenResponse {
@@ -12,5 +13,7 @@ export class TokenResponse {
   @Field(() => Boolean)
   registered: boolean;
 
+  @Field(()=> User)
+  user: string;
  
 }

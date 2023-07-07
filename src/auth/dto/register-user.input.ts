@@ -2,6 +2,7 @@ import { InputType, Field } from '@nestjs/graphql';
 import {
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   MaxLength,
   MinLength,
@@ -9,9 +10,10 @@ import {
 
 @InputType()
 export class RegisterUserInput {
-  @IsNotEmpty()
-  @Field(() => String)
-  username: string;
+  
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  username?: string;
 
   @IsNotEmpty()
   @IsEmail()
@@ -28,5 +30,13 @@ export class RegisterUserInput {
   @MinLength(8)
   @MaxLength(30)
   @Field(() => String)
-   password: string;
+  password: string;
+
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  cover_img?: string;
+
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  profile_img?: string;
 }

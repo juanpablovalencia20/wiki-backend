@@ -9,9 +9,9 @@ import * as bcryptjs from 'bcryptjs';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-  ) {}
+    @InjectRepository(User) 
+    private userRepository: Repository<User>
+   ) {}
 
   async findAll(): Promise<User[]> {
     return this.userRepository.find();
@@ -31,11 +31,22 @@ export class UsersService {
       if (existingUser) {
         throw new GraphQLError('Este email ya existe');
       }
-      const newProfile = await this.userRepository.create(registerUserInput);
+      
+      const defaultProfileImg =
+        'https://virtualt.org/portalvirtual/wp-content/uploads/2021/07/logoa1.png';
+      const defaultCoverImg =
+        'https://virtualt.org/portalvirtual/wp-content/uploads/2021/07/logoa1.png';
+
+      const newProfile = await this.userRepository.create({
+        ...registerUserInput,
+        profile_img: registerUserInput.profile_img || defaultProfileImg,
+        cover_img: registerUserInput.cover_img || defaultCoverImg,
+      });
+
       newProfile.password = await bcryptjs.hash(registerUserInput.password, 10);
       return await this.userRepository.save(newProfile);
     } catch (error) {
-      throw error;
+      throw new GraphQLError(error.message);
     }
   }
 }

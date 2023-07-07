@@ -9,31 +9,31 @@ export class User {
   @Field(() => Int)
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: true })
   @Field()
   username: string;
 
-  @Column()
+  @Column({type: 'text', unique: true})
   @Field()
   email: string;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: false })
   @Field()
   password: string;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: true })
   @Field()
   name: string;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: true })
   @Field()
   profile_img: string;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: true })
   @Field()
   cover_img: string;
 
-  @Column()
+  @Column({ type: 'varchar',nullable: true })
   @Field()
   biography: string;
 }
