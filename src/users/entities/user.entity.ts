@@ -1,5 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Comment } from '../../publication/entities/comment.entity';
+import { Publication } from '../../publication/entities/publication.entity';
+import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -8,10 +10,6 @@ export class User {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   id: number;
-
-  @Column({ type: 'varchar', nullable: true })
-  @Field()
-  username: string;
 
   @Column({type: 'text', unique: true})
   @Field()
@@ -36,4 +34,12 @@ export class User {
   @Column({ type: 'varchar',nullable: true })
   @Field()
   biography: string;
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  @Field(() => [Comment])
+  comments: Comment[];
+
+  @OneToMany(() => Publication, (publication) => publication.user)
+  @Field(() => [Publication])
+  publications: Publication[];
 }

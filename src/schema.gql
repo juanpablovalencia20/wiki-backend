@@ -8,15 +8,49 @@ type City {
   description: String!
 }
 
+type Categories {
+  id: Int!
+  name: String!
+  publications: [Publication!]!
+}
+
+type Multimedia {
+  id: Int!
+  url: String!
+  mimeType: String!
+  publication: Publication!
+}
+
+type Publication {
+  id: Int!
+  description: String!
+  comments: [Comment!]!
+  multimedia: [Multimedia!]!
+  user: User!
+  categories: Categories!
+}
+
+type Comment {
+  id: Int!
+  comment: String!
+  idPublication: Int!
+  publication: Publication!
+  user: User!
+  idComment: Int!
+  content: Comment!
+  replys: [Comment!]!
+}
+
 type User {
   id: Int!
-  username: String!
   email: String!
   password: String!
   name: String!
   profile_img: String!
   cover_img: String!
   biography: String!
+  comments: [Comment!]!
+  publications: [Publication!]!
 }
 
 type TokenResponse {
@@ -29,6 +63,7 @@ type TokenResponse {
 type Query {
   cities: [City!]!
   users: [User!]!
+  publications: [Publication!]!
 }
 
 type Mutation {
@@ -42,7 +77,6 @@ input LoginUserInput {
 }
 
 input RegisterUserInput {
-  username: String
   email: String!
   name: String!
   password: String!

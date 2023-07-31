@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { User } from '../entities/user.entity';
 import { RegisterUserInput } from 'src/auth/dto/register-user.input';
 import { GraphQLError } from 'graphql';
 import * as bcryptjs from 'bcryptjs';
@@ -30,12 +30,11 @@ export class UsersService {
       });
       if (existingUser) {
         throw new GraphQLError('Este email ya existe');
-      }
-      
+      } 
       const defaultProfileImg =
         'https://virtualt.org/portalvirtual/wp-content/uploads/2021/07/logoa1.png';
       const defaultCoverImg =
-        'https://virtualt.org/portalvirtual/wp-content/uploads/2021/07/logoa1.png';
+        'https://virtualt.org/portalvirtual/wp-content/uploads/2021/07/logocompleto-1024x675.png';
 
       const newProfile = await this.userRepository.create({
         ...registerUserInput,

@@ -8,6 +8,7 @@ import { join } from 'path';
 import { CityModule } from './city/city.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { PublicationModule } from './publication/publication.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -27,6 +28,7 @@ import { AuthModule } from './auth/auth.module';
     CityModule,
     UsersModule,
     AuthModule,
+    PublicationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

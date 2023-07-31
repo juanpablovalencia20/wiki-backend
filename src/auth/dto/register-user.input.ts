@@ -11,10 +11,6 @@ import {
 @InputType()
 export class RegisterUserInput {
   
-  @IsOptional()
-  @Field(() => String, { nullable: true })
-  username?: string;
-
   @IsNotEmpty()
   @IsEmail()
   @Field(() => String)
