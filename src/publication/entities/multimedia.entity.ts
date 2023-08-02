@@ -10,16 +10,16 @@ export class Multimedia {
   @Field(() => Int)
   id: number;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'text' , nullable: true})
   @Field(() => String)
   url: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'text' , nullable: true})
   @Field(() => String)
   mimeType: string;
 
-  @Field(() => Publication)
   @ManyToOne(() => Publication, (publication) => publication.multimedia,{ onDelete:"CASCADE" })
+  @Field(() => Publication)
   @JoinColumn({ name: 'idPublication'})
   @Field(() => Publication)
   publication: Publication;

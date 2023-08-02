@@ -17,6 +17,17 @@ export class UsersService {
     return this.userRepository.find();
   }
 
+  async findOneById(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id }
+    });
+    if (!user) {
+      throw new GraphQLError('Usuario no encontrado');
+    }
+    return user;
+  }
+  
+
   async findByEmail(email: string) {
     return await this.userRepository.findOne({
       where: { email }
@@ -32,9 +43,9 @@ export class UsersService {
         throw new GraphQLError('Este email ya existe');
       } 
       const defaultProfileImg =
-        'https://virtualt.org/portalvirtual/wp-content/uploads/2021/07/logoa1.png';
+        'https://cdn-icons-png.flaticon.com/512/149/149071.png';
       const defaultCoverImg =
-        'https://virtualt.org/portalvirtual/wp-content/uploads/2021/07/logocompleto-1024x675.png';
+        'https://cdn-icons-png.flaticon.com/512/149/149071.png';
 
       const newProfile = await this.userRepository.create({
         ...registerUserInput,

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Publication } from '../entities/publication.entity';
@@ -27,15 +27,29 @@ export class PublicationService {
     });
   }
 
+  async findOneById(publicationId: number): Promise<Publication> {
+    try {
+      const foundPublication = await this.publicationRepository.findOne({
+        where: { id: publicationId },
+        relations: this.publicationRelations,
+      });
+
+      if (!foundPublication) {
+        throw new Error('Publication not found');
+      }
+
+      return foundPublication;
+    } catch (error) {
+      throw new GraphQLError(error.message);
+    }
+  }
+
+
   async findAll(): Promise<Publication[]> {
     try {
       const publicationsFound = await this.publicationRepository.find({
         relations: this.publicationRelations,
       });
-
-      order: {
-        createdAt: 'DESC'
-      }
       
       if (publicationsFound.length === 0) {
         return [];

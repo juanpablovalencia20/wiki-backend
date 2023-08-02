@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity, OneToMany, ManyToMany } from 'typeorm';
 import { Publication } from './publication.entity';
 
 @Entity()
@@ -13,7 +13,11 @@ export class Categories {
   @Field()
   name: string;
 
-  @OneToMany(() => Publication, (publication) => publication.categories)
-  @Field(() => [Publication])
+  @Column({ type: 'varchar',nullable: true })
+  @Field()
+  description: string;
+
+
+  @ManyToMany(() => Publication, (publication) => publication.categories)
   publications: Publication[];
 }

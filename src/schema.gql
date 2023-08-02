@@ -11,7 +11,7 @@ type City {
 type Categories {
   id: Int!
   name: String!
-  publications: [Publication!]!
+  description: String!
 }
 
 type Multimedia {
@@ -27,7 +27,7 @@ type Publication {
   comments: [Comment!]!
   multimedia: [Multimedia!]!
   user: User!
-  categories: Categories!
+  categories: [Categories!]
 }
 
 type Comment {
