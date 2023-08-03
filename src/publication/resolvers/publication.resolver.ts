@@ -23,7 +23,7 @@ export class PublicationResolver {
       @Context() context
     ) {
       try {
-        return this.publicationService.createPublication(publication,context.user);
+        return this.publicationService.createPublication(publication,context.req.user.sub);
       } catch (error) {
         throw new GraphQLError("Failed to create publication: " + error.message);
       }
