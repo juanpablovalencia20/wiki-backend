@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, PrimaryGeneratedColumn, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity, JoinColumn, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Publication } from './publication.entity';
 import { User } from '../../users/entities/user.entity';
 
@@ -25,5 +25,21 @@ export class Multimedia {
   publication: Publication;
  
 
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp',
+    nullable: true,
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  @Field(() => Date)
+  created_at: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  updated_at: Date;
 
 }

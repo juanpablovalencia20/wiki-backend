@@ -12,13 +12,21 @@ type Categories {
   id: Int!
   name: String!
   description: String!
+  image: String!
+  created_at: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Multimedia {
   id: Int!
   url: String!
   mimeType: String!
   publication: Publication!
+  created_at: DateTime!
 }
 
 type Publication {
@@ -28,6 +36,7 @@ type Publication {
   multimedia: [Multimedia!]!
   user: User!
   categories: [Categories!]
+  created_at: DateTime!
 }
 
 type Comment {
@@ -38,7 +47,8 @@ type Comment {
   user: User!
   idComment: Int!
   content: Comment!
-  replys: [Comment!]!
+  response: [Comment!]!
+  created_at: DateTime!
 }
 
 type User {
@@ -51,6 +61,7 @@ type User {
   biography: String!
   comments: [Comment!]!
   publications: [Publication!]!
+  created_at: DateTime!
 }
 
 type TokenResponse {
@@ -63,12 +74,14 @@ type TokenResponse {
 type Query {
   cities: [City!]!
   users: [User!]!
+  userById: User!
   publications: [Publication!]!
 }
 
 type Mutation {
   login(loginUserInput: LoginUserInput!): TokenResponse!
   register(registerUserInput: RegisterUserInput!): TokenResponse!
+  createPublication(publication: CreatePublicationInput!): Publication!
 }
 
 input LoginUserInput {
@@ -82,4 +95,8 @@ input RegisterUserInput {
   password: String!
   cover_img: String
   profile_img: String
+}
+
+input CreatePublicationInput {
+  description: String!
 }

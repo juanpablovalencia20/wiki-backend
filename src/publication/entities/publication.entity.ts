@@ -1,10 +1,10 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, PrimaryGeneratedColumn, Entity, OneToMany, ManyToOne, JoinColumn, CreateDateColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity, OneToMany, ManyToOne, JoinColumn, CreateDateColumn, ManyToMany, JoinTable, UpdateDateColumn } from 'typeorm';
 import { Comment } from './comment.entity';
 import { User } from '../../users/entities/user.entity';
 import { Categories } from './categories.entity';
 import { Multimedia } from './multimedia.entity';
-import { Exclude } from 'class-transformer';
+
 
 @Entity()
 @ObjectType()
@@ -40,14 +40,21 @@ export class Publication {
   categories: Categories[];
 
 
-
-  @Exclude()
   @CreateDateColumn({
-    type: 'timestamp',
     name: 'created_at',
-    default: () => 'CURRENT_TIMESTAMP',
+    type: 'timestamp',
+    nullable: true,
+    default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  createdAt: Date;
+  @Field(() => Date)
+  created_at: Date;
 
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  updated_at: Date;
 
 }

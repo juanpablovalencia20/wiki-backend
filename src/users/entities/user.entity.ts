@@ -1,7 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Comment } from '../../publication/entities/comment.entity';
 import { Publication } from '../../publication/entities/publication.entity';
-import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity, OneToMany, UpdateDateColumn, CreateDateColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -42,4 +42,22 @@ export class User {
   @OneToMany(() => Publication, (publication) => publication.user)
   @Field(() => [Publication])
   publications: Publication[];
+
+  
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp',
+    nullable: true,
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  @Field(() => Date)
+  created_at: Date;
+
+  @UpdateDateColumn({
+    name: 'updated_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  updated_at: Date;
 }

@@ -9,39 +9,42 @@ import * as bcryptjs from 'bcryptjs';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) 
-    private userRepository: Repository<User>
-   ) {}
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {}
 
   async findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
   async findOneById(id: number) {
-    const user = await this.userRepository.findOne({
-      where: { id }
-    });
-    if (!user) {
-      throw new GraphQLError('Usuario no encontrado');
+    try {
+      const user = await this.userRepository.findOne({
+        where: { id },
+      });
+      if (!user) {
+        throw new GraphQLError('Failed to find user');
+      }
+      return user;
+    } catch (error) {
+      throw new GraphQLError('Failed to find user: ' + error.message);
     }
-    return user;
   }
-  
 
   async findByEmail(email: string) {
     return await this.userRepository.findOne({
-      where: { email }
+      where: { email },
     });
   }
 
   async register(registerUserInput: RegisterUserInput) {
     try {
       const existingUser = await this.userRepository.findOne({
-        where: { email: registerUserInput.email }
+        where: { email: registerUserInput.email },
       });
       if (existingUser) {
         throw new GraphQLError('Este email ya existe');
-      } 
+      }
       const defaultProfileImg =
         'https://cdn-icons-png.flaticon.com/512/149/149071.png';
       const defaultCoverImg =

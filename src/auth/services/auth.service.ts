@@ -14,13 +14,19 @@ export class AuthService {
   ) {}
 
   async login(user: User) {
-    const payload = { email: user.email, sub: user.id };
-    return {
-      access_token: this.jwtService.sign({ email: user.email, sub: user.id }),
-      registered: user.name ? true : false,
-      user: user
-    };
+    try {
+      const payload = { email: user.email, sub: user.id };
+      return {
+        access_token: this.jwtService.sign(payload),
+        registered: user.name ? true : false,
+        user: user
+      };
+    } catch (error) {
+   
+      throw new GraphQLError("Login failed: " + error.message);
+    }
   }
+  
 
   async validateUser(email: string, pass: string): Promise<User> {
     const user = await this.userService.findByEmail(email);

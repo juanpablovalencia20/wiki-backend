@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Publication } from '../entities/publication.entity';
 import { UsersService } from 'src/users/services/users.service';
 import { GraphQLError } from 'graphql';
+import { CreatePublicationInput } from '../dto/create-publication.input';
 
 @Injectable()
 export class PublicationService {
@@ -60,4 +61,17 @@ export class PublicationService {
       throw new GraphQLError(error.message);
     }
   }
+
+  async createPublication(publication: CreatePublicationInput, userId: number): Promise<Publication> {
+    try {
+      const newPublication = this.publicationRepository.create(publication);
+      const user = await this.profileService.findOneById(userId);
+      newPublication.user = user;
+      const publicationSave = await this.publicationRepository.save(newPublication);
+      return publicationSave;
+    } catch (error) {
+      throw new GraphQLError("Failed to create publication: " + error.message);
+    }
+  }
+  
 }
