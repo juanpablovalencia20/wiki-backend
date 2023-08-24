@@ -2,6 +2,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Comment } from '../../publication/entities/comment.entity';
 import { Publication } from '../../publication/entities/publication.entity';
 import { Column, PrimaryGeneratedColumn, Entity, OneToMany, UpdateDateColumn, CreateDateColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 @ObjectType()
@@ -12,27 +13,27 @@ export class User {
   id: number;
 
   @Column({type: 'text', unique: true})
-  @Field()
+  @Field(() => String)
   email: string;
 
   @Column({ type: 'varchar', nullable: false })
-  @Field()
+  @Field(() => String)
   password: string;
 
   @Column({ type: 'varchar', nullable: true })
-  @Field()
+  @Field(() => String)
   name: string;
 
   @Column({ type: 'varchar', nullable: true })
-  @Field()
+  @Field(() => String)
   profile_img: string;
 
   @Column({ type: 'varchar', nullable: true })
-  @Field()
+  @Field(() => String)
   cover_img: string;
 
   @Column({ type: 'varchar',nullable: true })
-  @Field()
+  @Field(() => String)
   biography: string;
 
   @OneToMany(() => Comment, (comment) => comment.user)
@@ -43,21 +44,19 @@ export class User {
   @Field(() => [Publication])
   publications: Publication[];
 
-  
   @CreateDateColumn({
+    type: 'timestamptz',
     name: 'created_at',
-    type: 'timestamp',
-    nullable: true,
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   @Field(() => Date)
-  created_at: Date;
+  createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
+    type: 'timestamptz',
     name: 'updated_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    default: () => 'CURRENT_TIMESTAMP',
   })
-  updated_at: Date;
+  updatedAt: Date;
 }

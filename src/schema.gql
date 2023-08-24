@@ -6,14 +6,7 @@ type City {
   id: Int!
   code: String!
   description: String!
-}
-
-type Multimedia {
-  id: Int!
-  url: String!
-  mimeType: String!
-  publication: Publication!
-  created_at: DateTime!
+  createdAt: DateTime!
 }
 
 """
@@ -21,25 +14,33 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Multimedia {
+  id: Int!
+  url: String!
+  mimeType: String!
+  publication: Publication!
+  createdAt: DateTime!
+}
+
 type Publication {
   id: Int!
   description: String!
   comments: [Comment!]!
   multimedia: [Multimedia!]!
   user: User!
-  created_at: DateTime!
+  createdAt: DateTime!
 }
 
 type Comment {
   id: Int!
   comment: String!
-  idPublication: Int!
+  publication_id: Int!
   publication: Publication!
   user: User!
-  idComment: Int!
+  comment_id: Int!
   content: Comment!
   response: [Comment!]!
-  created_at: DateTime!
+  createdAt: DateTime!
 }
 
 type User {
@@ -52,7 +53,7 @@ type User {
   biography: String!
   comments: [Comment!]!
   publications: [Publication!]!
-  created_at: DateTime!
+  createdAt: DateTime!
 }
 
 type TokenResponse {

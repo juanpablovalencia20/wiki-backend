@@ -2,6 +2,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Column, PrimaryGeneratedColumn, Entity, JoinColumn, ManyToOne, OneToMany, UpdateDateColumn, CreateDateColumn } from 'typeorm';
 import { Publication } from './publication.entity';
 import { User } from '../../users/entities/user.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 @ObjectType()
@@ -16,24 +17,24 @@ export class Comment {
 
   @Column()
   @Field(() => Int)
-  idPublication: number;
+  publication_id: number;
 
   @ManyToOne(() => Publication, (publication) => publication.comments,{ onDelete:"CASCADE" })
-  @JoinColumn({ name: 'idPublication'})
+  @JoinColumn({ name: 'publication_id'})
   @Field(() => Publication)
   publication: Publication;
 
   @ManyToOne(() => User, (user) => user.comments, {nullable: true})
-  @JoinColumn({name: 'idUser'})
+  @JoinColumn({name: 'user_id'})
   @Field(() => User)
   user: User;
 
   @Column()
   @Field(() => Int)
-  idComment: number;
+  comment_id: number;
 
   @ManyToOne(() => Comment, (comment) => comment.response,{ nullable:true , onDelete:"CASCADE"})
-  @JoinColumn({name: 'idComment'})
+  @JoinColumn({name: 'comment_id'})
   @Field(() => Comment)
   content?: Comment;
 
@@ -41,22 +42,20 @@ export class Comment {
   @Field(() => [Comment])
   response?: Comment[];
 
-  
   @CreateDateColumn({
+    type: 'timestamptz',
     name: 'created_at',
-    type: 'timestamp',
-    nullable: true,
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   @Field(() => Date)
-  created_at: Date;
+  createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
+    type: 'timestamptz',
     name: 'updated_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    default: () => 'CURRENT_TIMESTAMP',
   })
-  updated_at: Date;
+  updatedAt: Date;
 
 }

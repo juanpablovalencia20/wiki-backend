@@ -1,27 +1,31 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { User } from 'src/users/entities/user.entity';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Exclude } from 'class-transformer';
 import {
-  Column,
-  PrimaryGeneratedColumn,
   Entity,
-  UpdateDateColumn,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  ManyToOne,
   CreateDateColumn,
+  UpdateDateColumn,
+  Column,
 } from 'typeorm';
+
 
 @Entity()
 @ObjectType()
-export class City {
+export class Chat {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   id: number;
 
-  @Column({ type: 'varchar', nullable: true })
-  @Field(() => String)
-  code: string;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user1_id' })
+  user1: User;
 
-  @Column({ type: 'varchar', nullable: true })
-  @Field(() => String)
-  description: string;
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user2_id' })
+  user2: User;
 
   @CreateDateColumn({
     type: 'timestamptz',

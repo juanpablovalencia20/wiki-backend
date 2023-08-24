@@ -3,7 +3,7 @@ import { Column, PrimaryGeneratedColumn, Entity, OneToMany, ManyToOne, JoinColum
 import { Comment } from './comment.entity';
 import { User } from '../../users/entities/user.entity';
 import { Multimedia } from './multimedia.entity';
-
+import { Exclude } from 'class-transformer';
 
 @Entity()
 @ObjectType()
@@ -25,25 +25,24 @@ export class Publication {
   multimedia: Multimedia[];
 
   @ManyToOne(() => User, (user) => user.publications, {nullable: true})
-  @JoinColumn({name: 'idUser'})
+  @JoinColumn({name: 'user_id'})
   @Field(() => User)
   user: User;
 
   @CreateDateColumn({
+    type: 'timestamptz',
     name: 'created_at',
-    type: 'timestamp',
-    nullable: true,
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    default: () => 'CURRENT_TIMESTAMP',
   })
   @Field(() => Date)
-  created_at: Date;
+  createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
+    type: 'timestamptz',
     name: 'updated_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    default: () => 'CURRENT_TIMESTAMP',
   })
-  updated_at: Date;
+  updatedAt: Date;
 
 }

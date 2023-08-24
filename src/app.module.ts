@@ -9,6 +9,7 @@ import { CityModule } from './city/city.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { PublicationModule } from './publication/publication.module';
+import { ChatModule } from './chat/chat.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -16,11 +17,11 @@ import { PublicationModule } from './publication/publication.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
+      port: 5432,
+      username: 'postgres',
+      password: '1234',
       database: 'wiki2',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
@@ -29,6 +30,7 @@ import { PublicationModule } from './publication/publication.module';
     UsersModule,
     AuthModule,
     PublicationModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -28,10 +28,10 @@ export class PublicationService {
     });
   }
 
-  async findOneById(publicationId: number): Promise<Publication> {
+  async findOneById(publication_id: number): Promise<Publication> {
     try {
       const foundPublication = await this.publicationRepository.findOne({
-        where: { id: publicationId },
+        where: { id: publication_id },
         relations: this.publicationRelations,
       });
 
@@ -50,7 +50,7 @@ export class PublicationService {
     try {
       const publicationsFound = await this.publicationRepository.find({
         relations: this.publicationRelations,
-        order: { created_at: 'DESC' },
+        order: { createdAt: 'DESC' },
       });
       
       if (publicationsFound.length === 0) {
@@ -62,10 +62,10 @@ export class PublicationService {
     }
   }
 
-  async createPublication(publication: CreatePublicationInput, userId: number): Promise<Publication> {
+  async createPublication(publication: CreatePublicationInput, user_id: number): Promise<Publication> {
     try {
       const newPublication = this.publicationRepository.create(publication);
-      const user = await this.profileService.findOneById(userId);
+      const user = await this.profileService.findOneById(user_id);
       newPublication.user = user;
       const publicationSave = await this.publicationRepository.save(newPublication);
       return publicationSave;
