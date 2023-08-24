@@ -6,6 +6,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreatePublicationInput } from '../dto/create-publication.input';
 import { GraphQLError } from 'graphql';
 
+
 @Resolver(() => String)
 export class PublicationResolver {
     constructor(private readonly publicationService: PublicationService) {}

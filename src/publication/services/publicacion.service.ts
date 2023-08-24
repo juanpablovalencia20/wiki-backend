@@ -50,12 +50,12 @@ export class PublicationService {
     try {
       const publicationsFound = await this.publicationRepository.find({
         relations: this.publicationRelations,
+        order: { created_at: 'DESC' },
       });
       
       if (publicationsFound.length === 0) {
         return [];
       }
-
       return publicationsFound;
       } catch (error) {
       throw new GraphQLError(error.message);
@@ -74,4 +74,6 @@ export class PublicationService {
     }
   }
   
+
+
 }

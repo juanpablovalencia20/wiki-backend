@@ -8,19 +8,6 @@ type City {
   description: String!
 }
 
-type Categories {
-  id: Int!
-  name: String!
-  description: String!
-  image: String!
-  created_at: DateTime!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type Multimedia {
   id: Int!
   url: String!
@@ -29,13 +16,17 @@ type Multimedia {
   created_at: DateTime!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Publication {
   id: Int!
   description: String!
   comments: [Comment!]!
   multimedia: [Multimedia!]!
   user: User!
-  categories: [Categories!]
   created_at: DateTime!
 }
 

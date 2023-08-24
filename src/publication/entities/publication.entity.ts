@@ -2,7 +2,6 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Column, PrimaryGeneratedColumn, Entity, OneToMany, ManyToOne, JoinColumn, CreateDateColumn, ManyToMany, JoinTable, UpdateDateColumn } from 'typeorm';
 import { Comment } from './comment.entity';
 import { User } from '../../users/entities/user.entity';
-import { Categories } from './categories.entity';
 import { Multimedia } from './multimedia.entity';
 
 
@@ -29,16 +28,6 @@ export class Publication {
   @JoinColumn({name: 'idUser'})
   @Field(() => User)
   user: User;
-
-  @ManyToMany(() => Categories, (categories) => categories.publications)
-  @Field(() => [Categories], { nullable: true })
-  @JoinTable({
-    name: 'categories_publication',
-    joinColumn: { name: 'publicationId' },
-    inverseJoinColumn: { name: 'categoriesId' },
-  })
-  categories: Categories[];
-
 
   @CreateDateColumn({
     name: 'created_at',
