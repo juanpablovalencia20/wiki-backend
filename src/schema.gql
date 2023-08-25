@@ -43,10 +43,20 @@ type Comment {
   createdAt: DateTime!
 }
 
+type Message {
+  id: Int!
+  content: String!
+  see: Boolean!
+  sender: User!
+  chat: Chat!
+  createdAt: DateTime!
+}
+
 type Chat {
   id: Int!
   user1: User!
   user2: User!
+  message: [Message!]!
   createdAt: DateTime!
 }
 
@@ -74,6 +84,7 @@ type User {
   publications: [Publication!]!
   status: String!
   friend: Friend!
+  sentMessages: [Message!]!
   createdAt: DateTime!
 }
 
@@ -89,6 +100,8 @@ type Query {
   users: [User!]!
   userById: User!
   publications: [Publication!]!
+  listMessages(chatId: Float!): [Message!]!
+  listChats: [Message!]!
   listFriendsRequests: [Friend!]!
   listFriends: [Friend!]!
 }
@@ -97,6 +110,8 @@ type Mutation {
   login(loginUserInput: LoginUserInput!): TokenResponse!
   register(registerUserInput: RegisterUserInput!): TokenResponse!
   createPublication(publication: CreatePublicationInput!): Publication!
+  createChat(friendId: Float!): Chat!
+  sendMessage(chatId: Float!, content: String!): Message!
   sendFriendRequest(id: Float!): Friend!
   acceptFriendRequest(id: Float!): Friend!
   rejectFriendRequest(id: Float!): Friend!
@@ -117,4 +132,8 @@ input RegisterUserInput {
 
 input CreatePublicationInput {
   description: String!
+}
+
+type Subscription {
+  watchMessages: Message!
 }

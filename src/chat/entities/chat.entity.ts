@@ -9,7 +9,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Column,
+  OneToMany,
 } from 'typeorm';
+import { Message } from './messages.entity';
 
 
 @Entity()
@@ -28,6 +30,11 @@ export class Chat {
   @JoinColumn({name: 'user2_id'})
   @Field(() => User)
   user2: User;
+
+  
+  @OneToMany(() => Message, (message) => message.chat)
+  @Field(() => [Message])
+  message: Message[];
 
   @CreateDateColumn({ type: 'timestamptz', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)

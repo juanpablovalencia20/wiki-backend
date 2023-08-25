@@ -5,6 +5,7 @@ import { Column, PrimaryGeneratedColumn, Entity, OneToMany, UpdateDateColumn, Cr
 import { Exclude } from 'class-transformer';
 import { Chat } from 'src/chat/entities/chat.entity';
 import { Friend } from 'src/friends/entities/friend.entity';
+import { Message } from 'src/chat/entities/messages.entity';
 
 @Entity()
 @ObjectType()
@@ -64,6 +65,10 @@ export class User {
   @OneToOne(() => Friend, (friend) => friend.recipient)
   @Field(() => Friend)
   friend: Friend;
+
+  @OneToMany(() => Message, (message) => message.sender)
+  @Field(() => [Message])
+  sentMessages: Message[];
 
   @CreateDateColumn({ type: 'timestamptz', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)

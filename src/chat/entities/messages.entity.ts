@@ -28,12 +28,14 @@ export class Message {
   @Field(() => Boolean)
   see: boolean;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, (user) => user.sentMessages, {nullable: true})
   @JoinColumn({ name: 'sender_id' })
+  @Field(() => User)
   sender: User;
 
-  @ManyToOne(() => Chat)
-  @JoinColumn({ name: 'chat_id' })
+  @ManyToOne(() => Chat, (chat) => chat.message, {nullable: true})
+  @JoinColumn({name: 'chat_id'})
+  @Field(() => Chat)
   chat: Chat;
 
   @CreateDateColumn({

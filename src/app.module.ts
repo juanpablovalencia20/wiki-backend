@@ -17,6 +17,7 @@ import { FriendsModule } from './friends/friends.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      installSubscriptionHandlers: true,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',

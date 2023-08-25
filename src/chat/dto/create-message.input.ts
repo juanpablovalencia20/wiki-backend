@@ -6,7 +6,6 @@ export class CreateMessageInput {
   @IsNotEmpty()
   @IsString()
   @Field(() => String)
-  description : string;
-
+  content : string;
 
 }

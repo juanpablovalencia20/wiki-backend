@@ -7,7 +7,6 @@ import { FRIEND_STATUS } from '../utils/friends.util';
 import { GraphQLError } from 'graphql';
 
 
-
 @Injectable()
 export class FriendsService {
   constructor(
