@@ -11,7 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { PublicationModule } from './publication/publication.module';
 import { ChatModule } from './chat/chat.module';
 import { FriendsModule } from './friends/friends.module';
-import { FriendsService } from './friends/services/friends.service';
+
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -36,6 +36,6 @@ import { FriendsService } from './friends/services/friends.service';
     FriendsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, FriendsService],
+  providers: [AppService],
 })
 export class AppModule {}

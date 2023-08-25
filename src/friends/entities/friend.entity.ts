@@ -20,12 +20,14 @@ export class Friend {
   @Field(() => Int)
   id: number;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'sender_id' })
+  @ManyToOne(() => User, (user) => user.sender, {nullable: true})
+  @JoinColumn({name: 'sender_id'})
+  @Field(() => User)
   sender: User;
 
-  @OneToOne(() => User)
-  @JoinColumn({ name: 'recipient_id' })
+  @OneToOne(() => User, (user) => user.friend)
+  @JoinColumn({ name: 'recipient_id'})
+  @Field(() => User, { nullable: false })
   recipient: User;
 
   @Column({ nullable: true })

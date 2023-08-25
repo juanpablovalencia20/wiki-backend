@@ -43,6 +43,22 @@ type Comment {
   createdAt: DateTime!
 }
 
+type Chat {
+  id: Int!
+  user1: User!
+  user2: User!
+  createdAt: DateTime!
+}
+
+type Friend {
+  id: Int!
+  sender: User!
+  recipient: User!
+  accepted_date: DateTime!
+  status: String!
+  createdAt: DateTime!
+}
+
 type User {
   id: Int!
   email: String!
@@ -52,7 +68,12 @@ type User {
   cover_img: String!
   biography: String!
   comments: [Comment!]!
+  sender: [Friend!]!
+  chatsAsUser1: [Chat!]!
+  chatsAsUser2: [Chat!]!
   publications: [Publication!]!
+  status: String!
+  friend: Friend!
   createdAt: DateTime!
 }
 

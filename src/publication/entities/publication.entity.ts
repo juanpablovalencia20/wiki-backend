@@ -29,20 +29,12 @@ export class Publication {
   @Field(() => User)
   user: User;
 
-  @CreateDateColumn({
-    type: 'timestamptz',
-    name: 'created_at',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
+  @CreateDateColumn({ type: 'timestamptz', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)
   createdAt: Date;
 
   @Exclude()
-  @UpdateDateColumn({
-    type: 'timestamptz',
-    name: 'updated_at',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
+  @UpdateDateColumn({ type: 'timestamptz', name: 'updated_at', default: () => 'CURRENT_TIMESTAMP'})
   updatedAt: Date;
 
 }

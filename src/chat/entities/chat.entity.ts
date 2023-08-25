@@ -19,27 +19,22 @@ export class Chat {
   @Field(() => Int)
   id: number;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'user1_id' })
+  @ManyToOne(() => User, (user) => user.chatsAsUser1, {nullable: true})
+  @JoinColumn({name: 'user1_id'})
+  @Field(() => User)
   user1: User;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'user2_id' })
+  @ManyToOne(() => User, (user) => user.chatsAsUser2, {nullable: true})
+  @JoinColumn({name: 'user2_id'})
+  @Field(() => User)
   user2: User;
 
-  @CreateDateColumn({
-    type: 'timestamptz',
-    name: 'created_at',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
+  @CreateDateColumn({ type: 'timestamptz', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)
   createdAt: Date;
 
   @Exclude()
-  @UpdateDateColumn({
-    type: 'timestamptz',
-    name: 'updated_at',
-    default: () => 'CURRENT_TIMESTAMP',
-  })
+  @UpdateDateColumn({ type: 'timestamptz', name: 'updated_at', default: () => 'CURRENT_TIMESTAMP'})
   updatedAt: Date;
+  
 }
