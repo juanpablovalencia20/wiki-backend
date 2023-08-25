@@ -21,8 +21,7 @@ export class PublicationResolver {
     @UseGuards(JwtAuthGuard)
     async createPublication(
       @Args('publication') publication: CreatePublicationInput,
-      @Context() context
-    ) {
+      @Context() context) {
       try {
         return this.publicationService.createPublication(publication,context.req.user.sub);
       } catch (error) {

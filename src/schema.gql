@@ -89,12 +89,17 @@ type Query {
   users: [User!]!
   userById: User!
   publications: [Publication!]!
+  listFriendsRequests: [Friend!]!
+  listFriends: [Friend!]!
 }
 
 type Mutation {
   login(loginUserInput: LoginUserInput!): TokenResponse!
   register(registerUserInput: RegisterUserInput!): TokenResponse!
   createPublication(publication: CreatePublicationInput!): Publication!
+  sendFriendRequest(id: Float!): Friend!
+  acceptFriendRequest(id: Float!): Friend!
+  rejectFriendRequest(id: Float!): Friend!
 }
 
 input LoginUserInput {

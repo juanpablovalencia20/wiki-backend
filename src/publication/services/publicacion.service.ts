@@ -11,7 +11,6 @@ export class PublicationService {
   private readonly publicationRelations = [
     'comments',
     'user',
-    'categories',
     'multimedia',
   ];
 
@@ -41,7 +40,7 @@ export class PublicationService {
 
       return foundPublication;
     } catch (error) {
-      throw new GraphQLError(error.message);
+      throw new GraphQLError("Publication not found: " + error.message);
     }
   }
 
@@ -58,7 +57,7 @@ export class PublicationService {
       }
       return publicationsFound;
       } catch (error) {
-      throw new GraphQLError(error.message);
+      throw new GraphQLError("Publications not found: " + error.message);
     }
   }
 
